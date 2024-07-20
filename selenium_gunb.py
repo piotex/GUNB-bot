@@ -1,16 +1,9 @@
-import chromedriver_autoinstaller
 from selenium import webdriver
-from selenium.webdriver.chrome.webdriver import WebDriver
-from model_data_in import *
-from selenium.webdriver.common.by import By
-import time
-import random
-import os
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
-from seleniumbase import Driver
-from selenium.webdriver.common.keys import Keys
+
+url_start = "https://wyszukiwarka.gunb.gov.pl/"
 
 
 def get_init_driver() -> WebDriver:
@@ -36,9 +29,8 @@ def wait_for_element(driver: WebDriver, x_path: str, max_wait_time_s: float):
 
 
 def main():
-    data_model = DataModel()
     driver = get_init_driver()
-    driver.get(data_model.url_start)
+    driver.get(url_start)
     time.sleep(1)
 
 
