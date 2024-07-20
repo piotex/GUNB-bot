@@ -35,6 +35,109 @@ class DataModel:
 
 
 
+    def read_xpath_model_3(self):
+        sheet = openpyxl.load_workbook(self.user_input_data_file)['wybór danych do zapisu']
+        for row in sheet.iter_rows(min_row=2):
+            if row[0].value == "Numer wniosku":
+                self.xpath_model_3.szczegoly_wniosku_nr = get_row_value(row)
+            if row[0].value == "Stan prawny":
+                self.xpath_model_3.stan_prawny = get_row_value(row)
+            if row[0].value == "Województwo":
+                self.xpath_model_3.wojewodztwo = get_row_value(row)
+            if row[0].value == "Kod pocztowy":
+                self.xpath_model_3.kod_pocztowy = get_row_value(row)
+            if row[0].value == "Poczta":
+                self.xpath_model_3.poczta = get_row_value(row)
+            if row[0].value == "Miejscowość":
+                self.xpath_model_3.miejscowosc = get_row_value(row)
+            if row[0].value == "Ulica":
+                self.xpath_model_3.ulica = get_row_value(row)
+            if row[0].value == "Numer domu":
+                self.xpath_model_3.numer_domu = get_row_value(row)
+            if row[0].value == "Numer lokalu":
+                self.xpath_model_3.numer_lokalu = get_row_value(row)
+            if row[0].value == "Nr działki ew.":
+                self.xpath_model_3.nr_dzialki_ew = get_row_value(row)
+            if row[0].value == "Obręb ew.":
+                self.xpath_model_3.obreb_ew = get_row_value(row)
+            if row[0].value == "Jednostka ew.":
+                self.xpath_model_3.jednostka_ew = get_row_value(row)
+            if row[0].value == "Rodzaj obiektu":
+                self.xpath_model_3.rodzaj_obiektu = get_row_value(row)
+            if row[0].value == "Kategoria obiektu":
+                self.xpath_model_3.kategoria_obiektu = get_row_value(row)
+            if row[0].value == "Kubatura budynku":
+                self.xpath_model_3.kubatura_budynku = get_row_value(row)
+            if row[0].value == "Nazwa zamierzenia budowlanego":
+                self.xpath_model_3.nazwa_zamierzenia_budowlanego = get_row_value(row)
+            if row[0].value == "Rodzaj zamierzenia budowlanego":
+                self.xpath_model_3.rodzaj_zamierzenia_budowlanego = get_row_value(row)
+            if row[0].value == "Nazwisko inwestora":
+                self.xpath_model_3.nazwisko_inwestora = get_row_value(row)
+            if row[0].value == "Imię inwestora":
+                self.xpath_model_3.imie_inwestora = get_row_value(row)
+            if row[0].value == "Nazwisko projektanta":
+                self.xpath_model_3.nazwisko_pojektanta = get_row_value(row)
+            if row[0].value == "Imię projektanta":
+                self.xpath_model_3.imie_pojektanta = get_row_value(row)
+            if row[0].value == "Numer uprawnień budowlanych projektanta":
+                self.xpath_model_3.numer_uprawnien_budowlanych_pojektanta = get_row_value(row)
+            if row[0].value == "Pozostali projektanci":
+                self.xpath_model_3.pozostali_projektanci_pojektanta = get_row_value(row)
+            if row[0].value == "Nazwa organu":
+                self.xpath_model_3.nazwa_organu = get_row_value(row)
+            if row[0].value == "Adres organu":
+                self.xpath_model_3.adres_organu = get_row_value(row)
+            if row[0].value == "Numer ewidencyjny wniosku nadawany w urzędzie":
+                self.xpath_model_3.numer_ewidencyjny_wniosku_nadawany_w_urzedzie = get_row_value(row)
+            if row[0].value == "Data wpływu wniosku do urzędu":
+                self.xpath_model_3.data_wplywu_wniosku_do_urzedu = get_row_value(row)
+            if row[0].value == "Data rejestracji w systemie komputerowym":
+                self.xpath_model_3.data_rejestracji_w_systemie_komputerowym = get_row_value(row)
+            if row[0].value == "Numer ewidencyjny decyzji nadawany w urzędzie":
+                self.xpath_model_3.numer_ewidencyjny_decyzji_nadawany_w_urzedzie = get_row_value(row)
+            if row[0].value == "Data wydania decyzji":
+                self.xpath_model_3.data_wydania_decyzji = get_row_value(row)
+            if row[0].value == "Decyzja":
+                self.xpath_model_3.decyzja = get_row_value(row)
+            if row[0].value == "Czy inwestor był wezwany do uzupełnienia braków formalnych (art. 64 § 2 kpa)":
+                self.xpath_model_3.czy_inwestor_byl_wezwany_do_uzupelnienia_brakow_formalnych = get_row_value(row)
+            if row[0].value == "Data wysłania wezwania do uzupełnienia braków formalnych":
+                self.xpath_model_3.data_wyslania_wezwania_do_uzupelnienia_brakow_formalnych = get_row_value(row)
+            if row[0].value == "Data uzupełnienia braków formalnych":
+                self.xpath_model_3.data_uzupelnienia_brakow_formalnych = get_row_value(row)
+            if row[0].value == "Wniosek wycofany przez inwestora":
+                self.xpath_model_3.wniosek_wycofany_przez_inwestora = get_row_value(row)
+            if row[0].value == "Data wycofania wniosku":
+                self.xpath_model_3.data_wycofania_wniosku = get_row_value(row)
+            if row[0].value == "Wniosek bez rozpoznania":
+                self.xpath_model_3.wniosek_bez_rozpoznania = get_row_value(row)
+            if row[0].value == "Wniosek przekazany zgodnie z właściwością":
+                self.xpath_model_3.wniosek_przekazany_zgodnie_z_wlasciwoscia = get_row_value(row)
+            if row[0].value == "Czy inwestor był wezwany do uzupełnienia dokumentacji":
+                self.xpath_model_3.czy_inwestor_byl_wezwany_do_uzupelnienia_dokumentacji = get_row_value(row)
+            if row[0].value == "Data wysłania postanowienia":
+                self.xpath_model_3.data_wyslania_postanowienia = get_row_value(row)
+            if row[0].value == "Data otrzymania uzupełnienia dokumentacji/upływ terminu na uzupełnienie":
+                self.xpath_model_3.data_otrzymania_uzupelnienia_dokumentacji_uplyw_terminu_na_uzupelnienie = get_row_value(row)
+            if row[0].value == "Liczba dni":
+                self.xpath_model_3.liczba_dni = get_row_value(row)
+            if row[0].value == "Czy wniosek wymagał uzgodnień z wojewódzkim konserwatorem zabytków":
+                self.xpath_model_3.czy_wniosek_wymagal_uzgodnien_z_wojewodzkim_konserwatorem_zabytkow = get_row_value(row)
+            if row[0].value == "Data wysłania dokumentów do konserwatora":
+                self.xpath_model_3.data_wyslania_dokumentow_do_konserwatora = get_row_value(row)
+            if row[0].value == "Data otrzymania uzgodnień z konserwatorem":
+                self.xpath_model_3.data_otrzymania_uzgodnien_z_konserwatorem = get_row_value(row)
+            if row[0].value == "Zawieszenie postępowania":
+                self.xpath_model_3.zawieszenie_postepowania = get_row_value(row)
+            if row[0].value == "Data zawieszenia postępowania":
+                self.xpath_model_3.data_zawieszenia_postepowania = get_row_value(row)
+            if row[0].value == "Data podjęcia postępowania":
+                self.xpath_model_3.data_podjecia_postepowania = get_row_value(row)
+            if row[0].value == "Czy zaistniały inne przyczyny wydłużenia ustawowego czasu wydania decyzji":
+                self.xpath_model_3.czy_zaistnialy_inne_przyczyny_wydluzenia_ustawowego_czasu_wydania_decyzji = get_row_value(row)
+            if row[0].value == "Położenie na mapie":
+                self.xpath_model_3.polozenie_na_mapie = get_row_value(row)
     def read_xpath_model_1(self):
         sheet = openpyxl.load_workbook(self.user_input_data_file)['dane wyszukiwania']
         for row in sheet.iter_rows(min_row=2):
@@ -86,8 +189,12 @@ class DataModel:
     def __post_init__(self):
         self.read_general_data()
         self.xpath_model_1 = XPathModel1()
+        self.xpath_model_2 = XPathModel2()
+        self.xpath_model_3 = XPathModel3()
         self.read_xpath_model_1()
+        self.read_xpath_model_3()
         a = 5
+
 
 
 if __name__ == "__main__":
