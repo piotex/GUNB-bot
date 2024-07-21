@@ -88,7 +88,7 @@ def insert_requested_values(driver: WebDriver, data_model: DataModel):
     if xpath1_model.wojewodztwo_1 != "":
         wait_for_element(driver, x_path_vals.wojewodztwo_1, 10)
         my_select = Select(driver.find_element(By.XPATH, x_path_vals.wojewodztwo_1))
-        my_select.select_by_index(data_model.wojewodztwo_1[xpath1_model.wojewodztwo_1])
+        my_select.select_by_index(data_model.wojewodztwo[xpath1_model.wojewodztwo_1])
         time.sleep(1)
     if xpath1_model.organ_administracji != "":
         wait_for_element(driver, x_path_vals.organ_administracji, 10)
@@ -97,7 +97,7 @@ def insert_requested_values(driver: WebDriver, data_model: DataModel):
     if xpath1_model.wojewodztwo_2 != "":
         wait_for_element(driver, x_path_vals.wojewodztwo_2, 10)
         my_select = Select(driver.find_element(By.XPATH, x_path_vals.wojewodztwo_2))
-        my_select.select_by_index(data_model.wojewodztwo_2[xpath1_model.wojewodztwo_2])
+        my_select.select_by_index(data_model.wojewodztwo[xpath1_model.wojewodztwo_2])
         time.sleep(1)
     if xpath1_model.miejscowosc != "":
         wait_for_element(driver, x_path_vals.miejscowosc, 10)
@@ -154,15 +154,16 @@ def insert_requested_values(driver: WebDriver, data_model: DataModel):
 
 
 
-def get_documents_links(driver: WebDriver, data_model: DataModel) -> list[XPathModel2]:
+def get_documents_links(driver: WebDriver, data_model: DataModel):
     url = driver.current_url
     result = []
     for page_number in range(1, 11):
-        driver.get(url + f"&page={page_number}")
+        url += f"&page={1}"
+        driver.get(url)
         for row_num in range(1,11):
             try:
                 model2 = XPathModel2(row_num)
-                model2.url = driver.find_element(By.XPATH, model2.url).get_attribute('href')
+                model2.url = driver.find_element(By.XPATH, model2.url).text
                 model2.data_wplywu = driver.find_element(By.XPATH, model2.data_wplywu).text
                 model2.inwestor = driver.find_element(By.XPATH, model2.inwestor).text
                 model2.nazwa_zamieszkania = driver.find_element(By.XPATH, model2.nazwa_zamieszkania).text
@@ -172,6 +173,7 @@ def get_documents_links(driver: WebDriver, data_model: DataModel) -> list[XPathM
             except:
                 return result
     return result
+    a = 0
 
 
 def main():
@@ -181,7 +183,7 @@ def main():
     driver.get(model.xpath_model_1.url)
     time.sleep(5)
     insert_requested_values(driver, model)
-    list_XPathModel2 = get_documents_links(driver, model)
+    get_documents_links(driver, model)
 
 
 if __name__ == "__main__":

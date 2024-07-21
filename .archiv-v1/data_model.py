@@ -26,8 +26,7 @@ class DataModel:
     xpath_model_3: XPathModel3 = None
 
     typ_dokumentu: dict = None
-    wojewodztwo_1: dict = None
-    wojewodztwo_2: dict = None
+    wojewodztwo: dict = None
     rodzaj_zamierzenia_budowlanego: dict = None
     kategoria_obiektu: dict = None
 
@@ -59,21 +58,13 @@ class DataModel:
                         break
                     self.rodzaj_zamierzenia_budowlanego[row2[1].value] = j
 
-        self.wojewodztwo_1 = {}
+        self.wojewodztwo = {}
         for i, row in enumerate(sheet.iter_rows(min_row=2)):
-            if row[0].value == "Województwo 1":
+            if row[0].value == "Województwo":
                 for j, row2 in enumerate(sheet.iter_rows(min_row=i+2)):
                     if row2[0].value != None and j != 0:
                         break
-                    self.wojewodztwo_1[row2[1].value] = j
-
-        self.wojewodztwo_2 = {}
-        for i, row in enumerate(sheet.iter_rows(min_row=2)):
-            if row[0].value == "Województwo 2":
-                for j, row2 in enumerate(sheet.iter_rows(min_row=i+2)):
-                    if row2[0].value != None and j != 0:
-                        break
-                    self.wojewodztwo_2[row2[1].value] = j
+                    self.wojewodztwo[row2[1].value] = j
 
         self.kategoria_obiektu = {}
         for i, row in enumerate(sheet.iter_rows(min_row=2)):
