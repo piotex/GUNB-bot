@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class XPathModel3:
-    szczegoly_wniosku_nr: str = "Szczegóły wniosku nr"
+    szczegoly_wniosku_nr: str = "-"
     stan_prawny: str = "Stan prawny"
     #INFORMACJE DOTYCZĄCE OBIEKTU BUDOWLANEGO
     wojewodztwo: str = "Województwo"

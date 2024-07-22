@@ -1,10 +1,8 @@
 import datetime
 from dataclasses import dataclass, field
 import openpyxl
-
 from XPathModel1 import XPathModel1
 from XPathModel2 import XPathModel2
-
 from XPathModel3 import XPathModel3
 
 
@@ -82,9 +80,6 @@ class DataModel:
                     if row2[0].value != None and j != 0:
                         break
                     self.kategoria_obiektu[row2[1].value] = j
-
-
-
     def read_xpath_model_3(self):
         sheet = openpyxl.load_workbook(self.user_input_data_file)['wybór danych do zapisu']
         for row in sheet.iter_rows(min_row=2):
@@ -234,8 +229,38 @@ class DataModel:
             if row[0].value == "Nazwa zamierzenia":
                 self.xpath_model_1.nazwa_zamierzenia = get_row_value(row)
 
-    # def __init__(self):
-    #     pass
+    def save_search_result_1(self, list_XPathModel2: list[XPathModel2]):
+        headers = [
+            "Data wpływu",
+            "Inwestor",
+            "Nazwa zamierzenia",
+            "Stan prawny",
+            "Data wydania decyzji",
+            "Url",
+        ]
+
+        workbook = openpyxl.load_workbook(self.user_input_data_file)
+        sheet = workbook['wynik wyszukiwania']
+        for i, header in enumerate(headers):
+            sheet.cell(row=1, column=i+1).value = header
+        for i, x2model in enumerate(list_XPathModel2):
+            sheet.cell(row=i+2, column=1).value = x2model.data_wplywu
+            sheet.cell(row=i+2, column=2).value = x2model.inwestor
+            sheet.cell(row=i+2, column=3).value = x2model.nazwa_zamieszkania
+            sheet.cell(row=i+2, column=4).value = x2model.stan_prawny
+            sheet.cell(row=i+2, column=5).value = x2model.data_wydania_decyzji
+            sheet.cell(row=i+2, column=6).value = x2model.url
+
+        # for row in sheet.iter_rows(min_row=2):
+        #     if row[0].value == "Ścieżka do zrzutów ekranu":
+        #         self.screenshot_location = row[1].value
+        #         break
+
+        workbook.save(self.user_input_data_file)
+
+
+
+
     def __post_init__(self):
         self.read_general_data()
         self.xpath_model_1 = XPathModel1()
@@ -245,6 +270,8 @@ class DataModel:
         self.read_xpath_model_3()
         a = 5
 
+    def save_search_result_2(self, result):
+        pass
 
 
 if __name__ == "__main__":
