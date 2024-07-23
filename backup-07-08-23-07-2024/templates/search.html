@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <style>
+            .row-1 {
+                background-color: powderblue;
+            }
+            .left-1 {
+                width: 100px;
+                background-color: #ccc;
+                border: 1px solid #000;
+                padding: 10px;
+                text-align: center;
+                display: inline-block;
+            }
+            .right-1 {
+                width: 200px;
+                background-color: #eee;
+                border: 1px solid #000;
+                padding: 10px;
+                text-align: center;
+                display: inline-block;
+            }
+        </style>
+    </head>
+   <body>
+      <form action = "http://localhost:5000/search" method = "post">
+        <div class="row-1">
+            <div class="left-1">Rodzaj wyszukiwania:</div>
+            <div class="right-1">
+                <select name="comp_select" class="selectpicker form-control">
+                  {% for o in data %}
+                  <option value="{{ o.name }}">{{ o.name }}</option>
+                  {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Numer ewidencyjny wniosku:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Numer ewidencyjny decyzji:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Data złożenia wniosku / zgłoszenia od:</div>
+            <div class="right-1"><input type="date" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Data złożenia wniosku / zgłoszenia do:</div>
+            <div class="right-1"><input type = "date" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Data wydania decyzji od:</div>
+            <div class="right-1"><input type = "date" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Data wydania decyzji do:</div>
+            <div class="right-1"><input type = "date" name = "nm" /></div>
+        </div>
+
+
+
+        <div class="row-1">
+            <div class="left-1">Województwo:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Organ administracji:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+
+
+
+        <div class="row-1">
+            <div class="left-1">Województwo:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Miejscowość:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Ulica:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Numer domu:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Nr działki ew.:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Obręb ew.:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Arkusz mapy:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Rodzaj zamierzenia budowlanego:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Kategoria obiektu:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+        <div class="row-1">
+            <div class="left-1">Nazwa zamierzenia:</div>
+            <div class="right-1"><input type = "text" name = "nm" /></div>
+        </div>
+
+
+
+
+        <p>
+            <input type = "submit" value = "submit" />
+        </p>
+      </form>
+   </body>
+</html>

@@ -228,14 +228,6 @@ class DataModel:
                 self.xpath_model_1.kategoria_obiektu = get_row_value(row)
             if row[0].value == "Nazwa zamierzenia":
                 self.xpath_model_1.nazwa_zamierzenia = get_row_value(row)
-    def read_xpath_model_1_dict(self):
-        result = {}
-        sheet = openpyxl.load_workbook(self.user_input_data_file)['wybór danych do zapisu']
-        for row in sheet.iter_rows(min_row=2):
-            key = row[0].value
-            val = get_row_value(row)
-            result[key] = val
-        return result
 
     def save_search_result_1(self, list_XPathModel2: list[XPathModel2]):
         headers = [
@@ -278,35 +270,7 @@ class DataModel:
         self.read_xpath_model_3()
         a = 5
 
-
-
-    def save_search_result_2(self, model_list: list[dict]):
-        params_to_save = self.read_xpath_model_1_dict()
-        workbook = openpyxl.load_workbook(self.user_input_data_file)
-        sheet = workbook['wynik wyszukiwania']
-        for row in sheet['A1:G999']:
-            for cell in row:
-                cell.value = None
-
-        colum_numb = 0
-        for i, key in enumerate(model_list[0]):
-            if params_to_save[key] == "X":
-                sheet.cell(row=1, column=colum_numb+1).value = key
-                colum_numb += 1
-
-        for i, model_dict in enumerate(model_list):
-            colum_numb = 0
-            for j, key in enumerate(model_dict):
-                if params_to_save[key] == "X":
-                    sheet.cell(row=i+2, column=colum_numb+1).value = model_dict[key]
-                    colum_numb += 1
-
-        # for row in sheet.iter_rows(min_row=2):
-        #     if row[0].value == "Ścieżka do zrzutów ekranu":
-        #         self.screenshot_location = row[1].value
-        #         break
-
-        workbook.save(self.user_input_data_file)
+    def save_search_result_2(self, result):
         pass
 
 
