@@ -1,5 +1,5 @@
 import os
-import easyocr
+# import easyocr
 
 from selenium import webdriver
 import time

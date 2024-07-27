@@ -1,0 +1,15 @@
+[google sheet]
+https://www.youtube.com/watch?v=Mz9JG9CUXXY
+https://developers.google.com/sheets/api/quickstart/python
+
+https://console.cloud.google.com/apis/api/sheets.googleapis.com/metrics?project=gunb-bot-project
+
+[google sheet - 2]
+https://docs.gspread.org/en/latest/oauth2.html
+gunb-bot-project-credentials.json
+https://github.com/burnash/gspread
+
+
+
+[python - base]
+pip install -r requiremets.txt
