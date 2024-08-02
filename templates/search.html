@@ -5,120 +5,182 @@
                 background-color: powderblue;
             }
             .left-1 {
-                width: 100px;
+                width: 350px;
                 background-color: #ccc;
                 border: 1px solid #000;
                 padding: 10px;
                 text-align: center;
                 display: inline-block;
+                text-align: right;
             }
             .right-1 {
-                width: 200px;
+                width: 500px;
                 background-color: #eee;
                 border: 1px solid #000;
                 padding: 10px;
                 text-align: center;
                 display: inline-block;
             }
+            .right-1 input{
+                display: block;
+                width: 400px;
+            }
+            .right-1 select{
+                display: block;
+                width: 400px;
+            }
         </style>
     </head>
-   <body>
-      <form action = "http://localhost:5000/search" method = "post">
-        <div class="row-1">
-            <div class="left-1">Rodzaj wyszukiwania:</div>
-            <div class="right-1">
-                <select name="comp_select" class="selectpicker form-control">
-                  {% for o in data %}
-                  <option value="{{ o.name }}">{{ o.name }}</option>
-                  {% endfor %}
-                </select>
+    <body>
+        <form action = "/search" method = "get">
+            <div class="row-1">
+                <div class="left-1">Rodzaj wyszukiwania:</div>
+                <div class="right-1">
+                    <select name="rodzaj_wyszukiwania">
+                        {% for o in model.rodzaj_wyszukiwania %}
+                            <option value="{{ loop.index0 }}">{{ o }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Numer ewidencyjny wniosku:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Numer ewidencyjny decyzji:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Data złożenia wniosku / zgłoszenia od:</div>
-            <div class="right-1"><input type="date" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Data złożenia wniosku / zgłoszenia do:</div>
-            <div class="right-1"><input type = "date" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Data wydania decyzji od:</div>
-            <div class="right-1"><input type = "date" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Data wydania decyzji do:</div>
-            <div class="right-1"><input type = "date" name = "nm" /></div>
-        </div>
+            <div>
+                <div>Informacje o dokumencie</div>
+                <div class="row-1">
+                    <div class="left-1">Typ dokumentu (Rejestr Wniosków i Decyzji):</div>
+                    <div class="right-1">
+                        <select name="typ_dokumentu">
+                            {% for o in model.typ_dokumentu %}
+                                <option value="{{ loop.index0 }}">{{ o }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Numer ewidencyjny wniosku:</div>
+                    <div class="right-1"><input type = "text" name = "numer_ewidencyjny_wniosku" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Numer ewidencyjny decyzji:</div>
+                    <div class="right-1"><input type = "text" name = "numer_ewidencyjny_decyzji" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Data złożenia wniosku / zgłoszenia od:</div>
+                    <div class="right-1"><input type="date" name = "data_zlozenia_wniosku_od" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Data złożenia wniosku / zgłoszenia do:</div>
+                    <div class="right-1"><input type = "date" name = "data_zlozenia_wniosku_do" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Data wydania decyzji od:</div>
+                    <div class="right-1"><input type = "date" name = "data_wydania_decyzji_od" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Data wydania decyzji do:</div>
+                    <div class="right-1"><input type = "date" name = "data_wydania_decyzji_do" /></div>
+                </div>
+            </div>
 
 
 
-        <div class="row-1">
-            <div class="left-1">Województwo:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Organ administracji:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
+            <div>
+                <div>Właściwość miejscowa</div>
+                <div class="row-1">
+                    <div class="left-1">Województwo:</div>
+                    <div class="right-1">
+                        <select name="wojewodztwo_1">
+                            {% for o in model.wojewodztwo_1 %}
+                                <option value="{{ loop.index0 }}">{{ o }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Organ administracji:</div>
+                    <div class="right-1">
+                        <select name="organ_administracji">
+                            {% for o in model.organ_administracji %}
+                                <option value="{{ loop.index0 }}">{{ o }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
 
 
 
-        <div class="row-1">
-            <div class="left-1">Województwo:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Miejscowość:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Ulica:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Numer domu:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Nr działki ew.:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Obręb ew.:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Arkusz mapy:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Rodzaj zamierzenia budowlanego:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Kategoria obiektu:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
-        <div class="row-1">
-            <div class="left-1">Nazwa zamierzenia:</div>
-            <div class="right-1"><input type = "text" name = "nm" /></div>
-        </div>
+            <div>
+                <div>Informacje o obiekcie</div>
+                <div class="row-1">
+                    <div class="left-1">Województwo:</div>
+                    <div class="right-1">
+                        <select name="wojewodztwo_2">
+                            {% for o in model.wojewodztwo_2 %}
+                                <option value="{{ loop.index0 }}">{{ o }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Miejscowość:</div>
+                    <div class="right-1"><input type = "text" name = "miejscowosc" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Ulica:</div>
+                    <div class="right-1"><input type = "text" name = "ulica" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Numer domu:</div>
+                    <div class="right-1"><input type = "text" name = "numer_domu" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Nr działki ew.:</div>
+                    <div class="right-1"><input type = "text" name = "nr_dzialki_ew" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Obręb ew.:</div>
+                    <div class="right-1"><input type = "text" name = "obreb_ew" /></div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Arkusz mapy:</div>
+                    <div class="right-1"><input type = "text" name = "arkusz_mapy" /></div>
+                </div>
+            </div>
+
+            <div>
+                <div>Zamierzenie budowlane</div>
+                <div class="row-1">
+                    <div class="left-1">Rodzaj zamierzenia budowlanego:</div>
+                    <div class="right-1">
+                        <select name="rodzaj_zamierzenia_budowlanego">
+                            {% for o in model.rodzaj_zamierzenia_budowlanego %}
+                                <option value="{{ loop.index0 }}">{{ o }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Kategoria obiektu:</div>
+                    <div class="right-1">
+                        <select name="kategoria_obiektu">
+                            {% for o in model.kategoria_obiektu %}
+                                <option value="{{ loop.index0 }}">{{ o }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row-1">
+                    <div class="left-1">Nazwa zamierzenia:</div>
+                    <div class="right-1"><input type = "text" name = "nazwa_zamierzenia" /></div>
+                </div>
+            </div>
 
 
 
 
-        <p>
-            <input type = "submit" value = "submit" />
-        </p>
-      </form>
-   </body>
+            <p>
+                <input type = "submit" value = "submit" />
+            </p>
+        </form>
+    </body>
 </html>
