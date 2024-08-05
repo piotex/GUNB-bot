@@ -1,3 +1,4 @@
+import chromedriver_autoinstaller
 import pytesseract
 from PIL import Image
 import os
@@ -8,6 +9,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
 from input_data_model import InputDataModel
+from selenium.webdriver.chrome.options import Options
+
+
+
 
 screenshots_location = r"C:\Users\pkubon\Downloads"
 pytesseract.pytesseract.tesseract_cmd = r'C:\Users\pkubon\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
@@ -42,8 +47,11 @@ class DataModel:
     captha_inputs = ['Wpisz kod znajdujący się na obrazku poniżej:']
 
     def init_driver(self):
-        # driver = Driver(uc=True)
-        self.driver = webdriver.Chrome()
+        chromedriver_autoinstaller.install()
+        chrome_options = Options()
+        chrome_options.add_argument("--disable-search-engine-choice-screen")
+        # driver = Driver(uc=True, chromium_arg = "--disable-search-engine-choice-screen")
+        self.driver = webdriver.Chrome(options=chrome_options)
         time.sleep(0.5)
         # driver.maximize_window()
         self.driver.set_window_size(900, 900)
