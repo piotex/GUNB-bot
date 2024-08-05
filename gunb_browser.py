@@ -13,9 +13,19 @@ from selenium.webdriver.chrome.options import Options
 
 
 
+user_laptop_firmowy = False
+user_komp_stacjo = True
 
 screenshots_location = r"C:\Users\pkubon\Downloads"
 pytesseract.pytesseract.tesseract_cmd = r'C:\Users\pkubon\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+
+if user_laptop_firmowy:
+    screenshots_location = r"C:\Users\pkubon\Downloads"
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Users\pkubon\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+if user_komp_stacjo:
+    screenshots_location = r"C:\Users\pkubo\Downloads"
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Users\pkubo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
+
 max_page_to_visit = 10  # max 10
 
 def get_dict_input_model(model_data):
@@ -81,7 +91,9 @@ class DataModel:
                 self.driver.find_element(By.XPATH, xpath_img).screenshot(path)
                 value = solve_captcha(path)
                 self.insert_text_box(xpath_inp, value)
+                time.sleep(0.71)
                 self.driver.find_element(By.XPATH, xpath_submit).click()
+                time.sleep(1.1)
                 continue
             except:
                 return True
@@ -166,15 +178,17 @@ class DataModel:
 
                 value = solve_captcha(path)
                 self.insert_text_box(xpath_input, value)
+                time.sleep(1.1)
 
                 xpath_input = f"/html/body/div/div[{i_main}]/div/form/div[{i+1}]/button"
                 self.driver.find_element(By.XPATH, xpath_input).click()
+                time.sleep(1.1)
 
                 xpath_head = f"/html/body/div/div[{i_main}]/div/div/h1"
                 self.wait_for_element(xpath_head, 5)
 
-                xpath_error = f"/html/body/div/div[{i_main}]/div/form/div[{i}]/span"
                 try:
+                    xpath_error = f"/html/body/div/div[{i_main}]/div/form/div[{i}]/span"
                     self.driver.find_element(By.XPATH, xpath_error)
                     continue
                 except:
