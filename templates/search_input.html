@@ -32,7 +32,7 @@
         </style>
     </head>
     <body>
-        <form action = "/search" method = "get">
+        <form action = "/search_process" method = "get">
             <div class="row-1">
                 <div class="left-1">Rodzaj wyszukiwania:</div>
                 <div class="right-1">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="row-1">
                     <div class="left-1">Data złożenia wniosku / zgłoszenia od:</div>
-                    <div class="right-1"><input type="date" name = "data_zlozenia_wniosku_od" /></div>
+                    <div class="right-1"><input type="date" name = "data_zlozenia_wniosku" /></div>
                 </div>
                 <div class="row-1">
                     <div class="left-1">Data złożenia wniosku / zgłoszenia do:</div>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="row-1">
                     <div class="left-1">Data wydania decyzji od:</div>
-                    <div class="right-1"><input type = "date" name = "data_wydania_decyzji_od" /></div>
+                    <div class="right-1"><input type = "date" name = "data_wydania_decyzji" /></div>
                 </div>
                 <div class="row-1">
                     <div class="left-1">Data wydania decyzji do:</div>
@@ -88,8 +88,8 @@
                 <div class="row-1">
                     <div class="left-1">Województwo:</div>
                     <div class="right-1">
-                        <select name="wojewodztwo_1">
-                            {% for o in model.wojewodztwo_1 %}
+                        <select name="wojewodztwo">
+                            {% for o in model.wojewodztwo %}
                                 <option value="{{ loop.index0 }}">{{ o }}</option>
                             {% endfor %}
                         </select>

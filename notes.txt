@@ -13,3 +13,7 @@ https://github.com/burnash/gspread
 
 [python - base]
 pip install -r requiremets.txt
+
+[ocr - tesseract]
+https://pypi.org/project/pytesseract/
+https://stackoverflow.com/questions/50951955/pytesseract-tesseractnotfound-error-tesseract-is-not-installed-or-its-not-i
