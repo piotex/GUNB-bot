@@ -14,6 +14,35 @@
         </style>
     </head>
     <body>
+        {% for item in old_filters_keywords %}
+            <form action="/delete_filter">
+                <input readonly name="keyword_to_del" type="text" value="{{item[0]}}" style="width: 300px;">
+                <label for="keyword_category" style="width: 30px; text-align: center;"> in </label>
+                <input readonly name="keyword_category_to_del" type="text" value="{{item[1]}}" style="width: 300px;">
+                <input type="submit" value="Usuń">
+            </form>
+            <br/>
+        {% endfor %}
+
+        <form action="/add_filter">
+            <input name="keyword" type="text" placeholder="Wpisz słowo kluczowe i wybierz kolumne..." style="width: 300px;">
+            <label for="keyword_category" style="width: 30px; text-align: center;"> in </label>
+            <select name="keyword_category" id="keyword_category" style="width: 300px;">
+                {% for item in keyword_categories %}
+                    <option value="{{item}}">{{item}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Dodaj">
+        </form>
+
+        <div>
+            <div style="height: 50px;"> </div>
+            <form action="/generate_report">
+                <input type="submit" value="Wygeneruj raport" style="width: 695px;">
+            </form>
+            <div style="height: 50px;"> </div>
+        </div>
+
         <table class="table table-striped" id="myTable">
             <thead>
                 <tr>
