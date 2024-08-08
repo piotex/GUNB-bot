@@ -1,0 +1,34 @@
+
+<style>
+    .input-group-text{
+        height: 32px;
+        width: 300px;
+    }
+    .in_elem{
+        display: inline; 
+        margin: 0 10px; 
+        text-align: center;
+    }
+    .sep_elem{
+        display: inline; 
+        width: 10px;
+    }
+    .btn-danger{
+        height: 32px;
+    }
+    .row_elem{
+        margin: 5px 0;
+    }
+</style>
+
+{% for item in old_filters_keywords %}
+    <div class="row_elem">
+        <form action="/delete_filter">
+            <input class="input-group-text" readonly name="keyword_to_del" type="text" value="{{item[0]}}">
+            <div class="in_elem"> in </div>
+            <input class="input-group-text" readonly name="keyword_category_to_del" type="text" value="{{item[1]}}">
+            <div class="sep_elem"> </div>
+            <input type="submit" value="Usuń" class="btn btn-danger">
+        </form>
+    </div>
+{% endfor %}

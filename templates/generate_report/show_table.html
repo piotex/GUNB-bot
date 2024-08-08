@@ -1,0 +1,18 @@
+<table class="table table-striped" id="myTable">
+    <thead>
+        <tr>
+            {% for key in table_headers %}
+                <th onclick="sortTable({{ loop.index0 }})"> {{ key }} </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in table_items %}
+            <tr>
+                {% for key in item %}
+                    <td> {{ item[key] }} </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
