@@ -1,4 +1,5 @@
 import json
+import copy
 import requests
 import webbrowser
 from threading import Timer
@@ -57,16 +58,35 @@ def save_download_data():
 
     pass
 
+@app.route('/download_data_data')
+def download_data_data():
+    data_args = request.args
+
+    with open('data.json', encoding='utf-8') as f:
+        checked_data = json.load(f)
+
+    checked_data["Data złożenia\nwniosku / zgłoszenia"] = [data_args['Data złożenia wniosku / zgłoszenia']]
+
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(checked_data, f)
+
+    request.args = []
+    return download_data()
+
+
 
 @app.route('/download_data')
 def download_data():
-    data_args = request.args
+    data_args = {}
+    for key in request.args:
+        data_args[key] = request.args[key]
 
     with open('posible_data_from_gunb.json', encoding='utf-8') as f:
         posible_data = json.load(f)
 
     if len(data_args) > 0:
         checked_data = {}
+        checked_data["Data złożenia\nwniosku / zgłoszenia"] = [data_args.pop("Data złożenia wniosku / zgłoszenia", "2024-01-01")]
         for key in data_args:
             if data_args[key] not in checked_data:
                 checked_data[data_args[key]] = []
@@ -93,7 +113,8 @@ def download_data():
             r.encoding = r.apparent_encoding
             data_json = json.loads(r.text)
             for item in data_json["data"]:
-                organ[woj].append(item["name"])
+                if item["name"] != "Dowolny":
+                    organ[woj].append(item["name"])
         posible_data["Organ administracji"] = organ
 
 
@@ -149,11 +170,12 @@ if __name__ == "__main__":
     r = requests.get("https://wyszukiwarka.gunb.gov.pl/")
     r.encoding = r.apparent_encoding
     selects = BeautifulSoup(r.text).find_all('select')
-    options_typ_dokumentu = [op.text.strip() for op in selects[0].findAll('option')]
-    options_wojewodztwo = [op.text.strip() for op in selects[2].findAll('option')]
-    options_rodzaj_zamierzenia_budowlanego = [op.text.strip() for op in selects[5].findAll('option')]
-    options_kategoria_obiektu = [op.text.strip() for op in selects[6].findAll('option')]
+    options_typ_dokumentu = [op.text.strip() for op in selects[0].findAll('option') if op.text.strip() != 'Dowolny']
+    options_rodzaj_zamierzenia_budowlanego = [op.text.strip() for op in selects[5].findAll('option') if op.text.strip() != 'Dowolne']
+    options_kategoria_obiektu = [op.text.strip() for op in selects[6].findAll('option') if op.text.strip() != 'Dowolna']
+    options_wojewodztwo = [op.text.strip() for op in selects[2].findAll('option') if op.text.strip() != 'Cała Polska']
     posible_data = {
+        "Data złożenia\nwniosku / zgłoszenia": ["2024-01-01"],
         "Typ dokumentu (Rejestr Wniosków i Decyzji)": options_typ_dokumentu,
         "Rodzaj zamierzenia budowlanego": options_rodzaj_zamierzenia_budowlanego,
         "Kategoria obiektu": options_kategoria_obiektu,
