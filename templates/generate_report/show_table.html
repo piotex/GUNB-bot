@@ -1,9 +1,13 @@
 <table class="table table-striped" id="myTable">
     <thead>
         <tr>
-            {% for key in table_headers %}
-                <th onclick="sortTable({{ loop.index0 }})"> {{ key }} </th>
-            {% endfor %}
+            {% if table_items|length > 0  %}
+                {% for key in table_items[0] %}
+                    <th onclick="sortTable({{ loop.index0 }})">
+                        {{ key }}
+                    </th>
+                {% endfor %}
+            {% endif %}
         </tr>
     </thead>
     <tbody>

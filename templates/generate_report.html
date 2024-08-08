@@ -1,7 +1,25 @@
 {% include 'generate_report/css.html' %}
+<h3>Filtry: </h3>
+
+
+<form action="/add_header_filter">
+    {% for item in table_headers %}
+        <div class="form-check form-check-inline" style="display: inline-block; margin: 5px">
+          <input class="form-check-input" name="{{item}}" type="checkbox" id="{{item}}" onChange="this.form.submit()"   {{ "checked" if item in header_filters else ""}}  >
+          <label class="form-check-label" for="{{item}}">{{item}}</label>
+        </div>
+        <input name="checkbox" style="display: none"  >
+    {% endfor %}
+</form>
+
+
+
+
+
 {% include 'generate_report/delete_filter.html' %}
 {% include 'generate_report/add_filter.html' %}
 {% include 'generate_report/generate_report.html' %}
+<h3>Podgląd raportu: </h3>
 {% include 'generate_report/show_table.html' %}
 {% include 'generate_report/javascript.html' %}
 

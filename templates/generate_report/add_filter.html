@@ -22,13 +22,12 @@
 </style>
 
 <form action="/add_filter">
-    <input class="input-group-text" name="keyword" type="text" placeholder="Wpisz słowo kluczowe i wybierz kolumne...">
-    <label for="keyword_category" style="width: 30px; text-align: center;"> in </label>
     <select class="form-select" name="keyword_category" id="keyword_category">
         {% for item in table_headers %}
             <option value="{{item}}">{{item}}</option>
         {% endfor %}
     </select>
+    <input class="input-group-text" name="keyword" type="text" placeholder="Wpisz słowo kluczowe i wybierz kolumne...">
     <div class="sep_elem"> </div>
     <input type="submit" value="Dodaj" class="btn btn-primary">
 </form>

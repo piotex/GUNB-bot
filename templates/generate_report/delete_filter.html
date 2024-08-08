@@ -21,12 +21,11 @@
     }
 </style>
 
-{% for item in old_filters_keywords %}
+{% for item in logical_filters %}
     <div class="row_elem">
         <form action="/delete_filter">
-            <input class="input-group-text" readonly name="keyword_to_del" type="text" value="{{item[0]}}">
-            <div class="in_elem"> in </div>
-            <input class="input-group-text" readonly name="keyword_category_to_del" type="text" value="{{item[1]}}">
+            <input class="input-group-text" readonly name="keyword_category_to_del" type="text" value="{{item[0]}}">
+            <input class="input-group-text" readonly name="keyword_to_del" type="text" value="{{item[1]}}">
             <div class="sep_elem"> </div>
             <input type="submit" value="Usuń" class="btn btn-danger">
         </form>
