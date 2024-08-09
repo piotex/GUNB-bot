@@ -1,11 +1,11 @@
 import json
+import time
 
 
 def is_item_in_logical_filters(item, logical_filters):
     for filter_keyword in logical_filters:
         key = filter_keyword[0]
         val = filter_keyword[1]
-        print(key)
         if val not in item[key]:
             return False
     return True
@@ -104,3 +104,10 @@ def app_add_header_filter(args):
 
     with open('filters.json', 'w', encoding='utf-8') as f:
         json.dump(filters, f)
+
+def get_time(start_time):
+    end_time = time.time()
+    total_s = end_time - start_time
+    total_m = int(total_s / 60)
+    total_s = int(total_s - total_m * 60)
+    return f"{total_m}m {total_s}s"

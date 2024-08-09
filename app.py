@@ -1,11 +1,17 @@
+import datetime
 import json
 import copy
+import string
+import time
+
 import requests
 import webbrowser
 from threading import Timer
 from bs4 import BeautifulSoup
 from flask import Flask, redirect, url_for, request, render_template
-from utils_app import filter_data, app_delete_filter, app_add_filter, app_add_header_filter
+
+from download_records import download_records
+from utils_app import filter_data, app_delete_filter, app_add_filter, app_add_header_filter, get_time
 
 app = Flask(__name__)
 
@@ -51,32 +57,53 @@ def generate_report():
                            table_items=gunb_data)
 
 
-@app.route('/save_download_data')
-def save_download_data():
-    # with open('data.json', 'w', encoding='utf-8') as f:
-    #     json.dump(data, f)
 
-    pass
+@app.route('/send_generate_report')
+def send_generate_report():
+    import gspread
+    email = ""
+    gc = gspread.service_account(filename='../secrets/gunb-bot-project-credentials.json')
+    sh = gc.create("gunb-sierpien")
+    spreadsheet_url = "https://docs.google.com/spreadsheets/d/%s" % sh.id
 
-@app.route('/download_data_data')
-def download_data_data():
-    data_args = request.args
+    worksheet = sh.add_worksheet(title="gunb-worksheet-1", rows="100", cols="20")
 
-    with open('data.json', encoding='utf-8') as f:
-        checked_data = json.load(f)
+    with open('filters.json', encoding='utf-8') as f:
+        filters = json.load(f)
+    with open('result.json', encoding='utf-8') as f:
+        gunb_data = json.load(f)
 
-    checked_data["Data złożenia\nwniosku / zgłoszenia"] = [data_args['Data złożenia wniosku / zgłoszenia']]
+    keyword_categories = [key for key in gunb_data[0]]
+    for i, key in enumerate(keyword_categories, start=0):
+        worksheet.update_acell(f'{string.ascii_uppercase[i]}1', key)
 
-    with open('data.json', 'w', encoding='utf-8') as f:
-        json.dump(checked_data, f)
+    gunb_data = filter_data(gunb_data, filters)
+    for i, item in enumerate(gunb_data, start=2):
+        for j, key in enumerate(item, start=0):
+            worksheet.update_acell(f'{string.ascii_uppercase[j]}{i}', item[key])
 
-    request.args = []
-    return download_data()
+    sh.share(email, perm_type='user', role='writer')
+    print(spreadsheet_url)
+    return redirect(spreadsheet_url, code=302)
 
 
 
+
+
+@app.route('/download_data_run')
+def download_data_run():
+    start_time = time.time()
+    download_records()
+    print("===")
+    print(f"download_data_run {datetime.datetime.now()} time: {get_time(start_time)}")
+    return render_template("index.html", view="home.html")
 @app.route('/download_data')
 def download_data():
+    return render_template("index.html", view="download_data.html")
+
+
+@app.route('/downloading_settings')
+def downloading_settings():
     data_args = {}
     for key in request.args:
         data_args[key] = request.args[key]
@@ -120,36 +147,11 @@ def download_data():
 
 
     return render_template("index.html",
-                           view="download_data.html",
+                           view="downloading_settings.html",
                            checked_data=checked_data,
                            posible_data=posible_data)
 
-    # import gspread
-    # email = ""
-    # gc = gspread.service_account(filename='../secrets/gunb-bot-project-credentials.json')
-    # sh = gc.create("gunb-sierpien")
-    # spreadsheet_url = "https://docs.google.com/spreadsheets/d/%s" % sh.id
-    #
-    # worksheet = sh.add_worksheet(title="gunb-worksheet-1", rows="100", cols="20")
-    #
-    # with open('filters.json', encoding='utf-8') as f:
-    #     filters = json.load(f)
-    # with open('result.json', encoding='utf-8') as f:
-    #     gunb_data = json.load(f)
-    #
-    # keyword_categories = [key for key in gunb_data[0]]
-    # for i, key in enumerate(keyword_categories, start=0):
-    #     worksheet.update_acell(f'{string.ascii_uppercase[i]}1', key)
-    #
-    # gunb_data = filter_data(gunb_data, filters)
-    # for i, item in enumerate(gunb_data, start=2):
-    #     for j, key in enumerate(item, start=0):
-    #         worksheet.update_acell(f'{string.ascii_uppercase[j]}{i}', item[key])
-    #
-    # sh.share(email, perm_type='user', role='writer')
-    # print(spreadsheet_url)
-    # return redirect(spreadsheet_url, code=302)
-    # return render_template("index.html", view="download_data.html")
+
 
 
 @app.route('/home')

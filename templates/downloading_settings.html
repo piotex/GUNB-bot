@@ -1,0 +1,78 @@
+<form action="/downloading_settings">
+    <input type="submit" value="Zapisz" style="width: 450px;" class="btn btn-primary">
+    <h3>Filtry: </h3>
+    {% for key in posible_data %}
+        <div>
+            <h4>{{key}}</h4>
+            {% if key != "Organ administracji" and key != "Województwo" and key != "Kategoria obiektu" and key != "Data złożenia\nwniosku / zgłoszenia" %}
+                <div>
+                    {% for val in posible_data[key] %}
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="{{val}}" name="{{val}}" value="{{key}}"  {{ "checked" if val in checked_data[key] else ""}}  >
+                            <label class="form-check-label" for="{{val}}">{{val}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if key == "Kategoria obiektu" %}
+                <div style=" ">
+                    {% for val in posible_data[key] %}
+                        <div style="margin: 3px; display: inline-block;">
+                            <input class="form-check-input" type="checkbox" id="{{val}}" name="{{val}}" value="{{key}}"  {{ "checked" if val in checked_data[key] else ""}}  >
+                            <label class="form-check-label" for="{{val}}">{{val}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if key == "Data złożenia\nwniosku / zgłoszenia" %}
+                <div style=" ">
+                    <div>
+                        <div style="margin: 3px; display: inline-block;">
+                            <input type="date" name="Data złożenia wniosku / zgłoszenia" value="{{checked_data['Data złożenia\nwniosku / zgłoszenia'][0]}}"  >
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if key == "Województwo" %}
+                <div style=" ">
+                    {% for val in posible_data[key] %}
+                        <div style="margin: 2px 5px; display: inline-block;">
+                            <input class="form-check-input" type="checkbox" id="{{val}}" name="{{val}}" value="{{key}}" onChange="this.form.submit()"  {{ "checked" if val in checked_data[key] else ""}}  >
+                            <label class="form-check-label" for="{{val}}">{{val}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if key == "Organ administracji" %}
+                {% for main_val in posible_data[key] %}
+                    <div style="float: left; margin: 0 45px 0 0;">
+                        <h5>{{main_val}}</h5>
+                        {% for val in posible_data[key][main_val] %}
+                            <div style="">
+                                <input class="form-check-input" type="checkbox" id="{{val}}" name="{{val}}" value="{{key}}" {{ "checked" if val in checked_data[key] else ""}}  >
+                                <label class="form-check-label" for="{{val}}" style="max-width: 300px;">{{val}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+
+
+
+
+    <!--                <div style="display:inline-block">{{val}}</div>-->
+
+    <!--        <div class="form-check form-check-inline" style="display: inline-block; margin: 5px">        onChange="this.form.submit()"        -->
+<!--        </div>-->
+<!--        <input name="checkbox" style="display: none"  >-->
+
+</form>
+
+
+
+
+
+

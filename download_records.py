@@ -1,5 +1,8 @@
 import json
 import time
+
+import requests
+
 from utils_download_records import init_driver, find_main_input_xpath, get_option_idx, insert_captcha_in_search_window, \
     wait_for_element, wait_till_table_is_visible, solve_captcha_if_visible, find_table_indexes
 from selenium.webdriver.common.by import By
@@ -78,9 +81,23 @@ def insert_data(driver: WebDriver, model: dict, ):
                 continue
             key = "Organ administracji"
             if label == key:
-                selects = BeautifulSoup(driver.page_source).find_all('select')
-                options_organ_administracji = [op.text.strip() for op in selects[3].findAll('option')]
-                idx = get_option_idx(options_organ_administracji, model[key])
+                r = requests.get("https://wyszukiwarka.gunb.gov.pl/")
+                r.encoding = r.apparent_encoding
+                selects = BeautifulSoup(r.text).find_all('select')
+                options_wojewodztwo = {}
+                for op in selects[2].findAll('option'):
+                    options_wojewodztwo[op.text.strip()] = op['value']
+
+                r = requests.get(
+                    f"https://wyszukiwarka.gunb.gov.pl/json/Search/getOrgsByRegion/?region={options_wojewodztwo[model["Województwo"].lower()]}")
+                r.encoding = r.apparent_encoding
+                data_json = json.loads(r.text)
+
+                organy = []
+                for item in data_json["data"]:
+                    organy.append(item["name"])
+
+                idx = get_option_idx(organy, model[key])
                 xpath_input = f"/html/body/div/div[{i_main}]/div/form/div[{i}]/div/select"
                 Select(driver.find_element(By.XPATH, xpath_input)).select_by_index(idx)
                 continue
@@ -119,7 +136,14 @@ def get_data_from_table(driver: WebDriver):
             in_inwestor = driver.find_element(By.XPATH, xpath).text
             xpath = f"/html/body/div/div[{iii}]/div/div[{jjj}]/table/tbody/tr[{row_num}]/td[3]"
             in_nazwa_zamieszkania = driver.find_element(By.XPATH, xpath).text
-            result.append({"Url": in_url, "Inwestor": in_inwestor, "Nazwa zamierzenia": in_nazwa_zamieszkania})
+            xpath = f"/html/body/div/div[{jjj}]/div/div[{jjj}]/table/tbody/tr[{row_num}]/td[1]"
+            in_data_wplywu = driver.find_element(By.XPATH, xpath).text
+            result.append({
+                "Url": in_url,
+                "Inwestor": in_inwestor,
+                "Nazwa zamierzenia": in_nazwa_zamieszkania,
+                "Data złożenia\nwniosku / zgłoszenia": in_data_wplywu
+            })
         except:
             return result
     return result
@@ -130,11 +154,11 @@ def download_records():
         model = json.load(f)
 
     driver = init_driver()
-    time.sleep(0.51)
-    driver.get("https://wyszukiwarka.gunb.gov.pl/")
-    time.sleep(1.21)
+    # time.sleep(0.51)
+    # driver.get("https://wyszukiwarka.gunb.gov.pl/")
+    # time.sleep(1.21)
 
-    selects = BeautifulSoup(driver.page_source).find_all('select')
+    # selects = BeautifulSoup(driver.page_source).find_all('select')
     # model["Województwo"] = [op.text.strip() for op in selects[2].findAll('option')]
     # model["Organ administracji"] = [op.text.strip() for op in selects[3].findAll('option')]
 
@@ -153,7 +177,7 @@ def download_records():
                                 "Województwo": wojewodztwo,
                                 "Organ administracji": organ_administracji
                             }
-
+                            time.sleep(0.51)
                             driver.get("https://wyszukiwarka.gunb.gov.pl/")
                             time.sleep(1.21)
                             insert_data(driver, item)
@@ -169,6 +193,7 @@ def download_records():
 
                                 time.sleep(1.2)
                                 tmp_res = get_data_from_table(driver)
+                                item.pop("Data złożenia\nwniosku / zgłoszenia","2000-01-01")
                                 for key in item:
                                     for aaa in tmp_res:
                                         aaa[key] = item[key]
@@ -177,5 +202,7 @@ def download_records():
                                 with open('result.json', 'w', encoding='utf-8') as f:
                                     json.dump(result, f)
 
+                                if len(tmp_res) < 10:
+                                    break
 
-download_records()
+# download_records()
