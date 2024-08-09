@@ -123,7 +123,7 @@ def insert_data(driver: WebDriver, model: dict, ):
                 raise Exception("Can't solve Captcha")
 
         except Exception as eeee:
-            print(eeee)
+            pass
 
 
 def get_data_from_table(driver: WebDriver):
