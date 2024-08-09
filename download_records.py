@@ -1,3 +1,4 @@
+import datetime
 import json
 import time
 
@@ -154,21 +155,23 @@ def download_records():
         model = json.load(f)
 
     driver = init_driver()
-    # time.sleep(0.51)
-    # driver.get("https://wyszukiwarka.gunb.gov.pl/")
-    # time.sleep(1.21)
 
-    # selects = BeautifulSoup(driver.page_source).find_all('select')
-    # model["Województwo"] = [op.text.strip() for op in selects[2].findAll('option')]
-    # model["Organ administracji"] = [op.text.strip() for op in selects[3].findAll('option')]
+    with open('result.json', encoding='utf-8') as f:
+        result = json.load(f)
 
-    result = []
+    total = 0
+    for key in model:
+        total += len(model[key])
+    iiiiii = 0
     for typ_dokumentu in model["Typ dokumentu (Rejestr Wniosków i Decyzji)"]:
         for data_zlozenia_wniosku in model["Data złożenia\nwniosku / zgłoszenia"]:
             for rodzaj_zamierzenia_budowlanego in model["Rodzaj zamierzenia budowlanego"]:
                 for kategoria_obiektu in model["Kategoria obiektu"]:
                     for wojewodztwo in model["Województwo"]:
                         for organ_administracji in model["Organ administracji"]:
+                            iiiiii += 1
+                            print(f"{str(datetime.datetime.now()).split('.')[0]} === {iiiiii} / {total}")
+
                             item = {
                                 "Typ dokumentu (Rejestr Wniosków i Decyzji)": typ_dokumentu,
                                 "Data złożenia\nwniosku / zgłoszenia": data_zlozenia_wniosku,
@@ -204,5 +207,18 @@ def download_records():
 
                                 if len(tmp_res) < 10:
                                     break
+
+
+                            tmp_res = []
+                            tmp_keys = {}
+                            for item in result:
+                                key = item["Url"]
+                                if key not in tmp_keys:
+                                    tmp_keys[key] = 1
+                                    tmp_res.append(item)
+                            result = tmp_res
+                            with open('result.json', 'w', encoding='utf-8') as f:
+                                json.dump(result, f)
+
 
 # download_records()

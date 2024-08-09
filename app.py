@@ -61,23 +61,26 @@ def generate_report():
 @app.route('/send_generate_report')
 def send_generate_report():
     import gspread
-    email = ""
+    email = "@gmail.com"
     gc = gspread.service_account(filename='../secrets/gunb-bot-project-credentials.json')
     sh = gc.create("gunb-sierpien")
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/%s" % sh.id
 
-    worksheet = sh.add_worksheet(title="gunb-worksheet-1", rows="100", cols="20")
+    worksheet = sh.add_worksheet(title=f"gunb-{str(datetime.datetime.now()).split(".")[0]}", rows="100", cols="20")
 
     with open('filters.json', encoding='utf-8') as f:
         filters = json.load(f)
+
+    header_filters = filters["header_filters"]
+    logical_filters = filters["logical_filters"]
+
     with open('result.json', encoding='utf-8') as f:
         gunb_data = json.load(f)
 
-    keyword_categories = [key for key in gunb_data[0]]
-    for i, key in enumerate(keyword_categories, start=0):
+    gunb_data = filter_data(gunb_data, logical_filters, header_filters)
+    table_headers = [key for key in gunb_data[0]]
+    for i, key in enumerate(table_headers, start=0):
         worksheet.update_acell(f'{string.ascii_uppercase[i]}1', key)
-
-    gunb_data = filter_data(gunb_data, filters)
     for i, item in enumerate(gunb_data, start=2):
         for j, key in enumerate(item, start=0):
             worksheet.update_acell(f'{string.ascii_uppercase[j]}{i}', item[key])
