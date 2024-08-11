@@ -159,9 +159,9 @@ def download_records():
     with open('result.json', encoding='utf-8') as f:
         result = json.load(f)
 
-    total = 0
+    total = 1
     for key in model:
-        total += len(model[key])
+        total *= len(model[key])
     iiiiii = 0
     for typ_dokumentu in model["Typ dokumentu (Rejestr Wniosków i Decyzji)"]:
         for data_zlozenia_wniosku in model["Data złożenia\nwniosku / zgłoszenia"]:

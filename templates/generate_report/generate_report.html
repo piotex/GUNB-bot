@@ -1,7 +1,24 @@
 <div>
-    <div style="height: 50px;"> </div>
-    <form action="/send_generate_report">
-        <input type="submit" value="Wygeneruj raport" style="width: 695px;" class="btn btn-warning">
+    <form action="/save_generate_report">
+        <div class="raport_param_email">
+            <div class="raport-param-text">Udostępnij dla:</div>
+            <input class="input-group-text" name="raport_param_email" value='{{default_settings["raport_param_email"]}}' type="text" placeholder="email1;email2;email3;" onChange="this.form.submit()">
+        </div>
+        <div class="raport_param_space">
+            <div class="raport-param-text">Nazwa dokumentu:</div>
+            <input class="input-group-text" name="raport_param_dokument" value='{{default_settings["raport_param_dokument"]}}' type="text" placeholder="Wpisz nazwę dokumentu..." onChange="this.form.submit()">
+        </div>
+        <div class="raport_param_space">
+            <div class="raport-param-text">Nazwa arkusza:</div>
+            <input class="input-group-text" name="raport_param_sheet" value='{{default_settings["raport_param_sheet"]}}' type="text" placeholder="Wpisz nazwę arkusza..." onChange="this.form.submit()">
+        </div>
     </form>
-    <div style="height: 50px;"> </div>
 </div>
+<div>
+    <form action="/send_generate_report">
+        <div class="raport_param_space">
+            <input type="submit" value="Wygeneruj raport" style="width: 446px;" class="btn btn-warning">
+        </div>
+    </form>
+</div>
+
