@@ -46,7 +46,7 @@ def app_delete_filter(args):
     if "keyword_to_del" not in args:
         return False
 
-    with open('filters.json', encoding='utf-8') as f:
+    with open('data_json/filters.json', encoding='utf-8') as f:
         filters = json.load(f)
 
     header_filters = filters["header_filters"]
@@ -63,7 +63,7 @@ def app_delete_filter(args):
         "logical_filters": logical_filters
     }
 
-    with open('filters.json', 'w', encoding='utf-8') as f:
+    with open('data_json/filters.json', 'w', encoding='utf-8') as f:
         json.dump(filters, f)
 
 
@@ -73,7 +73,7 @@ def app_add_filter(args):
     if "keyword" not in args:
         return False
 
-    with open('filters.json', encoding='utf-8') as f:
+    with open('data_json/filters.json', encoding='utf-8') as f:
         filters = json.load(f)
 
     header_filters = filters["header_filters"]
@@ -88,7 +88,7 @@ def app_add_filter(args):
         "logical_filters": logical_filters
     }
 
-    with open('filters.json', 'w', encoding='utf-8') as f:
+    with open('data_json/filters.json', 'w', encoding='utf-8') as f:
         json.dump(filters, f)
 
 
@@ -96,7 +96,7 @@ def app_add_header_filter(args):
     if "checkbox" not in args:
         return False
 
-    with open('filters.json', encoding='utf-8') as f:
+    with open('data_json/filters.json', encoding='utf-8') as f:
         filters = json.load(f)
 
     header_filters = filters["header_filters"]
@@ -113,7 +113,7 @@ def app_add_header_filter(args):
         "logical_filters": logical_filters
     }
 
-    with open('filters.json', 'w', encoding='utf-8') as f:
+    with open('data_json/filters.json', 'w', encoding='utf-8') as f:
         json.dump(filters, f)
 
 

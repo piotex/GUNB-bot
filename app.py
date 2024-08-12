@@ -45,7 +45,7 @@ def save_generate_report():
 def generate_report():
     with open('data_json/default_settings.json', encoding='utf-8') as f:
         default_settings = json.load(f)
-    with open('filters.json', encoding='utf-8') as f:
+    with open('data_json/filters.json', encoding='utf-8') as f:
         filters = json.load(f)
     with open('data_json/result.json', encoding='utf-8') as f:
         gunb_data = json.load(f)
@@ -65,7 +65,7 @@ def generate_report():
 
 @app.route('/send_generate_report')
 def send_generate_report():
-    with open('filters.json', encoding='utf-8') as f:
+    with open('data_json/filters.json', encoding='utf-8') as f:
         filters = json.load(f)
     with open('data_json/result.json', encoding='utf-8') as f:
         gunb_data = json.load(f)
@@ -140,7 +140,7 @@ def update_possible_data():
     if "Województwo" in checked_data:
         r = requests.get("https://wyszukiwarka.gunb.gov.pl/")
         r.encoding = r.apparent_encoding
-        selects = BeautifulSoup(r.text).find_all('select')
+        selects = BeautifulSoup(r.text, "html.parser").find_all('select')
         options_wojewodztwo = {}
         for op in selects[2].findAll('option'):
             options_wojewodztwo[op.text.strip()] = op['value']
@@ -225,6 +225,21 @@ def init_files():
               "Organ administracji": []
             }, f)
 
+    path = r"data_json/filters.json"
+    if not os.path.isfile(path):
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump({
+                "header_filters": [
+                    "Inwestor",
+                    "Nazwa zamierzenia",
+                    "Data złożenia\nwniosku / zgłoszenia",
+                    "Kategoria obiektu",
+                    "Województwo",
+                    "Organ administracji"
+                ],
+                "logical_filters": []
+            }, f)
+
     path = r"data_json/result.json"
     if not os.path.isfile(path):
         with open(path, 'w', encoding='utf-8') as f:
@@ -279,7 +294,7 @@ if __name__ == "__main__":
                       'INFO': logging.INFO,
                       'WARNING': logging.WARNING,
                       'ERROR': logging.ERROR}
-    logging.basicConfig(filename=rf"logs/log-{time.strftime("%Y-%m-%d")}.txt",
+    logging.basicConfig(filename=rf'logs/log-{time.strftime("%Y-%m-%d")}.txt',
                         filemode='a',
                         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                         datefmt='%H:%M:%S',

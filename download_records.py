@@ -32,14 +32,14 @@ if user_laptop_firmowy:
     screenshots_location = r"C:\Users\pkubon\Downloads"
     pytesseract.pytesseract.tesseract_cmd = r'C:\Users\pkubon\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 if user_komp_stacjo:
-    screenshots_location = r"C:\Users\pkubo\Downloads"
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Users\pkubo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
+    screenshots_location = r""
+    pytesseract.pytesseract.tesseract_cmd = r""
 
 
 def insert_data(driver: WebDriver, model: dict, ):
     wojewodztwo_not_set = True
     i_main = find_main_input_xpath(driver)
-    selects = BeautifulSoup(driver.page_source).find_all('select')
+    selects = BeautifulSoup(driver.page_source, "html.parser").find_all('select')
     options_typ_dokumentu = [op.text.strip() for op in selects[0].findAll('option')]
     options_wojewodztwo = [op.text.strip() for op in selects[2].findAll('option')]
     options_organ_administracji = [op.text.strip() for op in selects[3].findAll('option')]
@@ -85,13 +85,12 @@ def insert_data(driver: WebDriver, model: dict, ):
             if label == key:
                 r = requests.get("https://wyszukiwarka.gunb.gov.pl/")
                 r.encoding = r.apparent_encoding
-                selects = BeautifulSoup(r.text).find_all('select')
+                selects = BeautifulSoup(r.text, "html.parser").find_all('select')
                 options_wojewodztwo = {}
                 for op in selects[2].findAll('option'):
                     options_wojewodztwo[op.text.strip()] = op['value']
 
-                r = requests.get(
-                    f"https://wyszukiwarka.gunb.gov.pl/json/Search/getOrgsByRegion/?region={options_wojewodztwo[model["Województwo"].lower()]}")
+                r = requests.get(f"https://wyszukiwarka.gunb.gov.pl/json/Search/getOrgsByRegion/?region={options_wojewodztwo[model['Województwo'].lower()]}")
                 r.encoding = r.apparent_encoding
                 data_json = json.loads(r.text)
 
