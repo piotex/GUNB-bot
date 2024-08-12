@@ -126,18 +126,18 @@ def get_time(start_time):
 
 
 def app_save_generate_report(args):
-    with open('default_settings.json', encoding='utf-8') as f:
+    with open('data_json/default_settings.json', encoding='utf-8') as f:
         default_settings = json.load(f)
 
     for arg in args:
         default_settings[arg] = args[arg]
 
-    with open('default_settings.json', 'w', encoding='utf-8') as f:
+    with open('data_json/default_settings.json', 'w', encoding='utf-8') as f:
         json.dump(default_settings, f)
 
 
 def app_send_generate_report(sheet_data: list) -> str:
-    with open('default_settings.json', encoding='utf-8') as f:
+    with open('data_json/default_settings.json', encoding='utf-8') as f:
         default_settings = json.load(f)
 
     gc = gspread.service_account(filename='../secrets/gunb-bot-project-credentials.json')

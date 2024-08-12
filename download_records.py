@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import time
 
 import requests
@@ -150,27 +151,24 @@ def get_data_from_table(driver: WebDriver):
     return result
 
 
-def download_records():
-    with open('data.json', encoding='utf-8') as f:
-        model = json.load(f)
-
+def download_records(checked_data):
     driver = init_driver()
 
-    with open('result.json', encoding='utf-8') as f:
+    with open('data_json/result.json', encoding='utf-8') as f:
         result = json.load(f)
 
     total = 1
-    for key in model:
-        total *= len(model[key])
+    for key in checked_data:
+        total *= len(checked_data[key])
     iiiiii = 0
-    for typ_dokumentu in model["Typ dokumentu (Rejestr Wniosków i Decyzji)"]:
-        for data_zlozenia_wniosku in model["Data złożenia\nwniosku / zgłoszenia"]:
-            for rodzaj_zamierzenia_budowlanego in model["Rodzaj zamierzenia budowlanego"]:
-                for kategoria_obiektu in model["Kategoria obiektu"]:
-                    for wojewodztwo in model["Województwo"]:
-                        for organ_administracji in model["Organ administracji"]:
+    for typ_dokumentu in checked_data["Typ dokumentu (Rejestr Wniosków i Decyzji)"]:
+        for data_zlozenia_wniosku in checked_data["Data złożenia\nwniosku / zgłoszenia"]:
+            for rodzaj_zamierzenia_budowlanego in checked_data["Rodzaj zamierzenia budowlanego"]:
+                for kategoria_obiektu in checked_data["Kategoria obiektu"]:
+                    for wojewodztwo in checked_data["Województwo"]:
+                        for organ_administracji in checked_data["Organ administracji"]:
                             iiiiii += 1
-                            print(f"{str(datetime.datetime.now()).split('.')[0]} === {iiiiii} / {total}")
+                            logging.info(f"{str(datetime.datetime.now()).split('.')[0]} === {iiiiii} / {total}")
 
                             item = {
                                 "Typ dokumentu (Rejestr Wniosków i Decyzji)": typ_dokumentu,
@@ -202,12 +200,11 @@ def download_records():
                                         aaa[key] = item[key]
                                 result += tmp_res
 
-                                with open('result.json', 'w', encoding='utf-8') as f:
+                                with open('data_json/result.json', 'w', encoding='utf-8') as f:
                                     json.dump(result, f)
 
                                 if len(tmp_res) < 10:
                                     break
-
 
                             tmp_res = []
                             tmp_keys = {}
@@ -217,7 +214,7 @@ def download_records():
                                     tmp_keys[key] = 1
                                     tmp_res.append(item)
                             result = tmp_res
-                            with open('result.json', 'w', encoding='utf-8') as f:
+                            with open('data_json/result.json', 'w', encoding='utf-8') as f:
                                 json.dump(result, f)
 
 

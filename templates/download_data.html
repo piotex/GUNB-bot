@@ -1,3 +1,54 @@
+{% include 'generate_report/css.html' %}
+
+<h3>Pobierz natychmiast: </h3>
 <form action="/download_data_run">
-    <input type="submit" value="Pobierz dane" style="width: 450px;" class="btn btn-warning">
+    <input type="submit" value="Pobierz dane (teraz)" style="width: 605px;" class="btn btn-warning">
 </form>
+<div style="height: 20px;"> </div>
+
+<h3>Kolejka pobierania: </h3>
+<h5 style="font-weight: 600; color: #cf7d7d;">(Pobieranie danych zostanie uruchomione z danymi ustawionymi w zakładce "USTAWIENIA POBIERANIA" w chwili kliknięcia przycisku "Dodaj do kolejki" )</h5>
+<form action="/download_data_add_queue">
+    Data (msc/dzień/rok):
+    <input class="form-check-input" name="download_data_add_queue_date" type="date" >
+    <div class="sep_elem"> </div>
+    Czas (godz:min):
+    <input class="form-check-input" name="download_data_add_queue_time" type="time" >
+    <div class="sep_elem"> </div>
+    <input type="submit" value="Dodaj do kolejki" class="btn btn-primary">
+</form>
+
+<div style="height: 20px;"> </div>
+
+
+<style>
+    .input-group-text{
+        height: 32px;
+        width: 300px;
+    }
+    .in_elem{
+        display: inline;
+        margin: 0 10px;
+        text-align: center;
+    }
+    .sep_elem{
+        display: inline;
+        width: 10px;
+    }
+    .btn-danger{
+        height: 32px;
+    }
+    .row_elem{
+        margin: 5px 0;
+    }
+</style>
+
+{% for item in queue_list %}
+    <div class="row_elem">
+        <form action="/download_data_delete_queue">
+            <input class="input-group-text" readonly name="download_data_add_queue_date_time" type="text" value="{{item}}">
+            <div class="sep_elem"> </div>
+            <input type="submit" value="Usuń" class="btn btn-danger">
+        </form>
+    </div>
+{% endfor %}

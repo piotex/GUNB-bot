@@ -1,5 +1,9 @@
 <form action="/save_downloading_settings">
     <input type="submit" value="Zapisz" style="width: 450px;" class="btn btn-primary">
+    <div>
+        <h3 style="display: inline-block;">Total: </h3>
+        <h3 style='display: inline-block; {{ "font-weight: 900; color: red;" if total > 95 else "font-weight: 300; color: blue;"}}'>{{total}}</h3>
+    </div>
     <h3>Filtry: </h3>
     {% for key in posible_data %}
         <div>
